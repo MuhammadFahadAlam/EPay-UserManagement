@@ -1,12 +1,22 @@
 from django.shortcuts import render
+from users.forms import CustomUserCreationForm
+from django.contrib.auth import login
+from django.urls import reverse
+from django.shortcuts import redirect, render
 
 # Create your views here.
 
-def home(request):
-    pass
 
-def signIn(request):
-    pass
+def dashboard(request):
+    return render(request, "dashboard.html")
 
-def signUp(request):
-    pass
+
+def register(request):
+    if request.method == "GET":
+        return render(request, "register.html", {"form": CustomUserCreationForm})
+    elif request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect(reverse("dashboard"))
