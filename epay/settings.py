@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_otp",
-    "django_otp.plugins.otp_totp",
-    "django_otp.plugins.otp_hotp",
     "django_otp.plugins.otp_static",
+    "django_otp.plugins.otp_totp",
+    "two_factor",
     "users",
     "crispy_forms",
 ]
@@ -52,6 +52,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django_otp.middleware.OTPMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -127,6 +128,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
+
+LOGIN_URL = "two_factor:login"
 
 LOGIN_REDIRECT_URL = "dashboard"
 LOGOUT_REDIRECT_URL = "dashboard"
